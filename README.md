@@ -1,50 +1,100 @@
-# Welcome to your Expo app 👋
+# 🍳 International Recipes Home
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplikasi mobile berbasis **React Native** dan **Expo** yang menyajikan info resep makanan internasional secara dinamis dengan mengonsumsi data dari API [DummyJSON Recipes](https://dummyjson.com/recipes).
 
-## Get started
+Aplikasi ini mendukung *file-based routing* menggunakan **Expo Router** dan telah dioptimalkan agar responsif baik di perangkat mobile maupun ketika di-deploy sebagai Web App di Vercel.
 
-1. Install dependencies
+---
 
+## ✨ Fitur Utama
+
+* **🏠 Beranda Interaktif (Home Screen)**
+  * **Today's Recipe**: Menampilkan satu resep unggulan acak setiap kali aplikasi dimuat untuk menarik minat pengguna.
+  * **Other Recipes Slider**: Daftar resep pilihan lainnya yang disajikan secara horizontal dengan kartu visual yang menarik.
+* **🔍 Eksplorasi Kategori & Filter (Recipes Screen)**
+  * **Reset Filter ("All")**: Tombol khusus untuk menampilkan semua resep kembali tanpa batasan kategori.
+  * **Horizontal Tag Selector**: Memungkinkan pengguna menyaring resep berdasarkan tag/kategori masakan (seperti *Italian*, *Mexican*, *Asian*, dsb.).
+  * **Adaptive Grid Layout**: Tampilan kartu resep berbentuk grid 2 kolom yang rapi. Apabila hasil pencarian hanya menyisakan 1 item, tata letak otomatis menempel ke kiri secara proporsional.
+* **📖 Halaman Detail Resep (Detail Recipe Screen)**
+  * Informasi komprehensif seperti waktu memasak (*cooking time*), waktu persiapan (*preparation time*), jumlah porsi (*servings*), tingkat kesulitan, hingga asal negara resep (*cuisine*).
+  * Daftar bahan-bahan (*ingredients*) terstruktur dengan penomoran yang rapi.
+  * Langkah demi langkah cara memasak (*instructions*) yang jelas dan mudah dipahami.
+* **🎨 Tampilan Premium & Responsif**
+  * Gradasi latar belakang halus menggunakan `expo-linear-gradient`.
+  * Komponen kustom seperti Header dengan tombol navigasi kembali otomatis.
+
+---
+
+## 🛠️ Tech Stack & Dependencies
+
+Proyek ini dibuat menggunakan teknologi modern:
+
+* **Framework Utama:** React Native & Expo (v54)
+* **Navigasi:** Expo Router (File-based Routing)
+* **Networking (API Fetching):** Axios
+* **UI & Styling:** 
+  * Expo Linear Gradient
+  * Ionicons (Vector Icons dari `@expo/vector-icons`)
+  * React Native Web (Dukungan platform web)
+
+---
+
+## 📂 Struktur Proyek
+
+Berikut adalah struktur folder utama dalam proyek ini:
+
+```text
+├── app/
+│   ├── (tabs)/
+│   │   ├── _layout.tsx         # Struktur navigasi bawah (bottom tabs)
+│   │   ├── index.tsx           # Halaman Beranda (Home)
+│   │   ├── recipes.tsx         # Halaman Pencarian & Filter Resep
+│   │   └── list_recipes.tsx    # Halaman list tambahan (dinonaktifkan/hidden)
+│   ├── recipes/
+│   │   └── [id_recipe].tsx     # Halaman Detail Resep (Dynamic Route)
+│   └── _layout.tsx             # Root layout aplikasi
+├── assets/
+│   └── images/
+│       └── recipe-favicon.png  # Logo utama dan splash screen aplikasi
+├── components/
+│   ├── Header.tsx              # Komponen Header kustom dengan tombol kembali
+│   ├── RecipeItem.tsx          # Komponen kartu resep
+│   └── TagItem.tsx             # Komponen chip filter tag
+├── constants/
+│   └── color.ts                # Variabel palet warna tema aplikasi
+├── package.json
+└── vercel.json                 # Konfigurasi deployment untuk Vercel
+```
+
+---
+
+## 🚀 Cara Menjalankan Secara Lokal
+
+Ikuti langkah berikut untuk memasang dan menjalankan aplikasi di komputer Anda:
+
+1. **Clone Repositori ini:**
+   ```bash
+   git clone https://github.com/gustiaryapriandana31/recipes-home.git
+   cd recipes-home
+   ```
+
+2. **Pasang dependensi proyek:**
    ```bash
    npm install
    ```
 
-2. Start the app
-
+3. **Jalankan server pengembangan (Metro Bundler):**
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. **Buka Aplikasi:**
+   * Tekan `a` untuk membuka di Emulator Android.
+   * Tekan `i` untuk membuka di Simulator iOS.
+   * Tekan `w` untuk membuka di Web Browser.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🌐 Publikasi & Deployment
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Proyek ini telah di-deploy ke web menggunakan **Vercel** dan dapat diakses secara publik. Konfigurasi direktori output diatur pada berkas `vercel.json` mengarah ke folder ekspor statis `/dist`.
