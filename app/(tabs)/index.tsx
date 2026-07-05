@@ -57,7 +57,7 @@ const HomeScreen = () => {
 
                 <FlatList
                     data={randomRecipes}
-                    contentContainerStyle={{ gap:10 }}
+                    contentContainerStyle={{ gap:10, alignItems: 'flex-start' }}
                     style={{marginTop:10}}
                     renderItem={({ item }) => (
                         <RecipeItem
