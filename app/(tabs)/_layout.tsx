@@ -35,13 +35,11 @@ const TabLayouts = () => {
                     tabBarIcon:({color, size}) => (
                         <Ionicons name="receipt" size={size} color={color} />)
                     }}/>
-            {/* <Tabs.Screen 
+            <Tabs.Screen 
                 name="list_recipes" 
                 options={{
-                    title:"List Recipes", 
-                    tabBarIcon:({color, size}) => (
-                        <Ionicons name="images" size={size} color={color} />)
-                    }}/> */}
+                    href: null
+                }}/>
         </Tabs>   
     )
 }
