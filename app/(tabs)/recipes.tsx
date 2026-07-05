@@ -27,12 +27,16 @@ const RecipesScreen = () => {
     const getTags = async () => {
         const { data } = await axios.get(`https://dummyjson.com/recipes/tags`);
 
-        setTags(data);
+        setTags(["All", ...data]);
     }
 
     const handleChangeRecipe = async (name:string) => {
         // Alert.alert(name);
-        setName(name)
+        if (name === "All") {
+            setName("");
+        } else {
+            setName(name);
+        }
     }
 
     useEffect(() => {
@@ -45,14 +49,14 @@ const RecipesScreen = () => {
         <LinearGradient
             colors={[COLOR.background, COLOR.backgroundLight]}
             style={{ flex: 1 }}>
-            <Header title="Nusantara Recipes Home" />
+            <Header title="International Recipes Home" />
             
             {/* List Tags */}
             <View>
                 <FlatList
                     data={tags}
                     renderItem={({ item }) => (
-                        <TagItem name={item} handleChangeRecipe={handleChangeRecipe} selectedName={name}/>
+                        <TagItem name={item} handleChangeRecipe={handleChangeRecipe} selectedName={name || "All"}/>
                     )}
                     keyExtractor={(item) => item}
                     horizontal
@@ -62,12 +66,12 @@ const RecipesScreen = () => {
             </View>
 
             {/* List Recipes */}
-            <View style={{flex:1, margin:5}}>
+            <View style={{flex:1}}>
                 <FlatList
                     data={recipes}
                     numColumns={2}
-                    contentContainerStyle={{gap:10}}
-                    columnWrapperStyle={{ justifyContent:'space-between', gap:10 }}
+                    contentContainerStyle={{paddingHorizontal: 16, gap:16, paddingBottom: 20}}
+                    columnWrapperStyle={{ justifyContent:'flex-start', gap:16 }}
                     style={{marginTop:10}}
                     renderItem={({ item }) => (
                         <RecipeItem

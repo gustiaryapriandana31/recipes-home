@@ -11,7 +11,7 @@ const RecipesScreen = () => {
         colors={[COLOR.background, COLOR.backgroundLight]}
         style={{ flex: 1 }}
         >
-        <Header title="Nusantara Recipes Home" />
+        <Header title="International Recipes Home" />
         <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <Text>Ini Halaman Recipes</Text>
 

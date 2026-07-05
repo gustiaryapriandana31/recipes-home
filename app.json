@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "nusantara-recipes-home",
-    "slug": "nusantara-recipes-home",
+    "name": "International Recipes Home",
+    "slug": "international-recipes-home",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "nusantararecipeshome",
+    "icon": "./assets/images/recipe-favicon.png",
+    "scheme": "internationalrecipeshome",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -30,7 +30,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/recipe-favicon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",

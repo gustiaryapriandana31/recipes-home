@@ -26,7 +26,7 @@ const DetailRecipe = () => {
 
     return (
         <LinearGradient colors={[COLOR.background, COLOR.backgroundLight]} style={{ flex: 1 }}>
-            <Header backButton={true} title="Nusantara Recipes Home" />
+            <Header backButton={true} title="International Recipes Home" />
             <ScrollView>
                 {/* Image */}
                 <View style={styles.container}>

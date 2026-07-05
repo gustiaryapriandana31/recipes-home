@@ -42,7 +42,7 @@ const HomeScreen = () => {
 
     return (
         <LinearGradient colors={[COLOR.background, COLOR.backgroundLight]} style={{ flex: 1 }}>
-            <Header title="Nusantara Recipes Home" />
+            <Header title="International Recipes Home" />
             <View style={styles.container}>
                 <View style={styles.card}>
                     <Image source={{ uri: recipes.image }} style={styles.imageFull} />
@@ -73,14 +73,14 @@ const HomeScreen = () => {
             </View>
         </LinearGradient>
         // <LinearGradient colors={[COLOR.background, COLOR.backgrondLight]} style={{ flex: 1 }}>
-        //     <Header title="Nusantara Recipes Home"/>
+        //     <Header title="International Recipes Home"/>
         //     <SafeAreaView
         //         style={{
         //             flex: 1,
         //             justifyContent: "center",
         //             alignItems: "center",
         //         }}>
-        //         <Text>Nusantara Recipes Home</Text>
+        //         <Text>International Recipes Home</Text>
         //         <Link
         //             href={"/recipes"}
         //             style={{ fontSize: 20, color: "green", marginTop: 20 }}
