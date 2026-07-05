@@ -1,98 +1,146 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet, FlatList } from 'react-native'
+import React, {useState, useEffect} from 'react'
+import { Link } from 'expo-router'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
+import { COLOR } from '../../constants/color';
+import Header from '@/components/Header';
+import axios from "axios";
+import RecipeItem from "@/components/RecipeItem";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
-
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+export interface RecipeData {
+    id: number;
+    name: string;
+    cookTimeMinutes: number;
+    image: string;
 }
 
+const HomeScreen = () => {
+    // Random Data Recipes
+    const random = Math.floor(Math.random() * 40) + 1;
+
+    const [randomRecipes, setRandomRecipes] = useState<RecipeData[]>([]);
+    const [recipes, setRecipes] = useState<Record<string, any>>({});
+
+    const getRecipes = async () => {
+        const recipe = await axios.get(`https://dummyjson.com/recipes/${random}`);
+        // console.log(recipe.data);
+        setRecipes(recipe.data);
+    };
+    
+    const getRandomRecipes = async () => {
+        const {data} = await axios.get(`https://dummyjson.com/recipes?limit=10&skip=${random}&select=id,name,image,cookTimeMinutes`);
+        
+        // console.log(data.recipes);
+        setRandomRecipes(data.recipes);
+    }
+
+    useEffect(() => {
+        getRecipes();
+        getRandomRecipes();
+    }, []);
+
+    return (
+        <LinearGradient colors={[COLOR.background, COLOR.backgroundLight]} style={{ flex: 1 }}>
+            <Header title="Nusantara Recipes Home" />
+            <View style={styles.container}>
+                <View style={styles.card}>
+                    <Image source={{ uri: recipes.image }} style={styles.imageFull} />
+                    <View style={styles.overlay}>
+                        <Text style={styles.title}>{recipes.name}</Text>
+                        <Text style={styles.cookTimeMinutes}>
+                            {recipes.cookTimeMinutes} Minutes
+                        </Text>
+                    </View>
+                </View>
+                <Text style={styles.subtitle}>Other Recipes</Text>
+
+                <FlatList
+                    data={randomRecipes}
+                    contentContainerStyle={{ gap:10 }}
+                    style={{marginTop:10}}
+                    renderItem={({ item }) => (
+                        <RecipeItem
+                        id={item.id}
+                        name={item.name}
+                        cookTimeMinutes={item.cookTimeMinutes}
+                        image={item.image}
+                    />
+                    )}
+                    keyExtractor={(item) => item.id.toString()}
+                    horizontal
+                />
+            </View>
+        </LinearGradient>
+        // <LinearGradient colors={[COLOR.background, COLOR.backgrondLight]} style={{ flex: 1 }}>
+        //     <Header title="Nusantara Recipes Home"/>
+        //     <SafeAreaView
+        //         style={{
+        //             flex: 1,
+        //             justifyContent: "center",
+        //             alignItems: "center",
+        //         }}>
+        //         <Text>Nusantara Recipes Home</Text>
+        //         <Link
+        //             href={"/recipes"}
+        //             style={{ fontSize: 20, color: "green", marginTop: 20 }}
+        //         >
+        //             <Text>Recipes</Text>
+        //         </Link>
+        //     </SafeAreaView>
+        // </LinearGradient>
+    )
+}
+
+export default HomeScreen
+
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+    container : {
+        flex:1
+    },
+    card : {
+        position : 'relative',
+        marginBottom: 20,
+        borderRadius: 20,
+    },
+    imageFull : {
+        width: '100%',
+        height: 320,
+        borderRadius: 10,
+        elevation: 15,
+    },
+    overlay:{
+        position: 'absolute',
+        left: 20,
+        bottom: 20,
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: "800",
+        color: COLOR.white,
+        marginBottom: 4,
+        letterSpacing: 1,
+        textShadowColor: COLOR.active,
+        textShadowOffset: {
+            width: 1,
+            height: 2
+        },
+        textShadowRadius: 5
+    },
+    subtitle: {
+        fontSize: 14,
+        fontWeight: "600",
+        color: COLOR.primary,
+        paddingHorizontal: 20,
+        letterSpacing: 2,
+    },
+    cookTimeMinutes : {
+        color: COLOR.white,
+        textShadowColor: COLOR.inactive,
+        textShadowRadius: 3,
+        textShadowOffset: {
+            width: 2,
+            height: 2,
+        },
+    }
+})
